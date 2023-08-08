@@ -26,15 +26,14 @@ jobs:
         
     - name: Build and Push Image to Elastic Container Registry
       run: |
-          cd monolith
-          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/m5f9r5o3
-          docker build -t monolith .
-          docker tag monolith:latest public.ecr.aws/m5f9r5o3/monolith:latest
-          docker push public.ecr.aws/m5f9r5o3/monolith:latest
+          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/v1c7n0e8
+          docker build -t saroproject .
+          docker tag saroproject:latest public.ecr.aws/v1c7n0e8/saroproject:latest
+          docker push public.ecr.aws/v1c7n0e8/saroproject:latest
 
     - name: Deploy Image to Elastic Kubernetes Service
       run: |
-          aws eks --region eu-west-1 update-kubeconfig --name onemedical-stg
-          kubectl create deployment monolith --image=public.ecr.aws/m5f9r5o3/monolith:latest
+          aws eks --region us-east-2 update-kubeconfig --name timi-project
+          kubectl create deployment monolith --image=public.ecr.aws/v1c7n0e8/saroproject:latest
           kubectl expose deployment monolith --type=LoadBalancer --port 80 --target-port 8080
 
