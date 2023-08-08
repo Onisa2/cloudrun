@@ -34,6 +34,6 @@ jobs:
     - name: Deploy Image to Elastic Kubernetes Service
       run: |
           aws eks --region us-east-2 update-kubeconfig --name timi-project
-          kubectl create deployment monolith --image=public.ecr.aws/v1c7n0e8/saroproject:latest
-          kubectl expose deployment monolith --type=LoadBalancer --port 80 --target-port 8080
+          kubectl create deployment project --image=public.ecr.aws/v1c7n0e8/saroproject:latest
+          kubectl expose deployment project --type=LoadBalancer --port 80 --target-port 8080
 
