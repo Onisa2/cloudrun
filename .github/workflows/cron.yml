@@ -1,0 +1,20 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: namespace-cleaner
+spec:
+  schedule: "59 23 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: kubectl
+            image: bitnami/kubectl:latest
+            command:
+            - /bin/sh
+            - -c
+            - >
+              kubectl get namespaces -o jsonpath='{.items[?(@.metadata.name=="ephemeral*")].metadata.name}' |
+              xargs -I {} kubectl delete namespace {}
+          restartPolicy: OnFailure
