@@ -1,3 +1,16 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: default-cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -15,6 +28,6 @@ spec:
             - /bin/sh
             - -c
             - >
-              kubectl get namespaces -o jsonpath='{.items[?(@.metadata.name=="ephemeral*")].metadata.name}' |
+              kubectl get namespaces --no-headers -o custom-columns=":metadata.name" | grep ^ephemeral |
               xargs -I {} kubectl delete namespace {}
           restartPolicy: OnFailure
