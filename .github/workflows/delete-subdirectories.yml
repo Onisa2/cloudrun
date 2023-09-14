@@ -14,7 +14,7 @@ jobs:
       - name: Delete Subdirectories
         run: |
           # Specify the parent directory
-          parent_directory="delete"
+          parent_directory="delete/mmm"
 
           # Use the find command to locate and delete subdirectories (excluding the parent directory itself)
           find "$parent_directory" -mindepth 1 -type d -exec rm -rf {} \;
