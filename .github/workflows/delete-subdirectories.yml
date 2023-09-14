@@ -10,6 +10,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: List Contents Before Deletion
+        run: |
+          ls -l delete/mmm
+
 
       - name: Delete Subdirectories
         run: |
