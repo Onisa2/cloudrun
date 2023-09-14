@@ -1,10 +1,8 @@
 name: Delete Subdirectories
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
-on:
-  schedule:
-    - cron: '17 19 * * *'  # Schedule to run daily at midnight (UTC)
-
 jobs:
   delete-subdirectories:
     runs-on: ubuntu-latest
