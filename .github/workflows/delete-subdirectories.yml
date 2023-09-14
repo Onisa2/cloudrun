@@ -2,7 +2,7 @@ name: Delete Subdirectories
 
 on:
   schedule:
-    - cron: '15 19 * * *'  # Schedule to run daily at midnight (UTC)
+    - cron: '17 19 * * *'  # Schedule to run daily at midnight (UTC)
 
 jobs:
   delete-subdirectories:
