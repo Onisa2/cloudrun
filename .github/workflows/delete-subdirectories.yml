@@ -1,0 +1,24 @@
+name: Delete Subdirectories
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Schedule to run daily at midnight (UTC)
+
+jobs:
+  delete-subdirectories:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Delete Subdirectories
+        run: |
+          # Specify the parent directory
+          parent_directory="delete"
+
+          # Use the find command to locate and delete subdirectories (excluding the parent directory itself)
+          find "$parent_directory" -mindepth 1 -type d -exec rm -rf {} \;
+
+        # Ensure the script runs in the specified directory
+        working-directory: ${{ github.workspace }}
