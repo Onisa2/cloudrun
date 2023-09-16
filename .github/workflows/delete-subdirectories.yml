@@ -21,7 +21,7 @@ jobs:
           parent_directory="delete/mmm"
 
           # Use the find command to locate and delete subdirectories (excluding the parent directory itself)
-          find "$parent_directory" -mindepth 1 -type d -exec rm -rf {} \;
+          find "$parent_directory" -mindepth 1 -delete
 
         # Ensure the script runs in the specified directory
         working-directory: ${{ github.workspace }}
