@@ -20,7 +20,9 @@ jobs:
     - name: Trigger workflow in another repository
       uses: peter-evans/repository-dispatch@v2
       with:
-        token: ${{ secrets.TOKEN }}
+        token: ${{ secrets.REPO_DISPATCH_TOKEN }}
         repository: onisa2/cronjob
+        workflow: blank.yml
+        ref: main 
         event-type: custom-event-type
         client-payload: '{"name": "${{ inputs.name }}"}'
