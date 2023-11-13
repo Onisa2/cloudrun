@@ -1,0 +1,26 @@
+name: Manual workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Person to greet'
+        default: 'World'
+        required: true
+        type: string
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Send greeting
+      run: echo "Hello ${{ inputs.name }}"
+
+    - name: Trigger workflow in another repository
+      uses: peter-evans/repository-dispatch@v2
+      with:
+        token: ${{ secrets.TOKEN }}
+        repository: onisa2/cronjob
+        event-type: custom-event-type
+        client-payload: '{"name": "${{ inputs.name }}"}'
