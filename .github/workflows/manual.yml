@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       repository: cronjob
-        description: 'name of target repo'
+        description:  'Name of the target repository'
         required: true
         type: string
       branch:
-        description: 'Main'
+        description: 'Branch in the target repository'
         required: true
         type: string
 
@@ -26,11 +26,3 @@ jobs:
           repository: ${{ github.event.inputs.repository }}
           event-type: 'workflow_dispatch'
           client-payload: '{"branch": "${{ github.event.inputs.branch }}"}'
-
-jobs2:
-  greet:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Send greeting
-        run: echo "Hello ${{ inputs.name }}"
