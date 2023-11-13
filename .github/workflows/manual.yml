@@ -3,8 +3,8 @@ name: Trigger Workflow in Target Repo
 on:
   workflow_dispatch:
     inputs:
-      repository: cronjob
-        description:  'Name of the target repository'
+      repository:
+        description: 'Name of the target repository'
         required: true
         type: string
       branch:
