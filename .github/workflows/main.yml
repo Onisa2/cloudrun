@@ -20,7 +20,7 @@ jobs:
     - name: Trigger workflow in another repository
       uses: peter-evans/repository-dispatch@v2
       with:
-        token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+        token: ${{ secrets.TOKEN }}
         repository: onisa2/cronjob
         workflow: blank.yml
         ref: main 
