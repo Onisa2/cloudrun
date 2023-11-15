@@ -1,28 +1,32 @@
-name: Manual workflow trigger 
-
+name: workflow_01
 on:
   workflow_dispatch:
-    inputs:
-      name:
-        description: 'Person to greet'
-        default: 'World'
+     inputs:
+      workflow_02:
+        description: 'ًWorkflow 2 which will be triggered'
         required: true
-        type: string
+        default: 'workflow_02'
+
+      workflow2_github_account:
+        description: 'GitHub Account Owner'
+        required: true
+        default: ':userName'
+
+      workflow2_repo_github:
+        description: 'repo-name'
+        required: true
+        default: ':repoName' 
 
 jobs:
-  greet:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Send greeting
-      run: echo "Hello ${{ inputs.name }}"
-
-    - name: Trigger workflow in another repository
-      uses: peter-evans/repository-dispatch@v2
-      with:
-        token: ${{ secrets.TOKEN }}
-        repository: onisa2/cronjob
-        workflow: blank.yml
-        ref: main 
-        event-type: custom-event-type
-        client-payload: '{"name": "${{ inputs.name }}"}'
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Test
+        run: |
+          curl -X POST https://api.github.com/repos/:userName/:repoName/dispatches \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          -u ${{ secrets.TOKEN }} \
+          --data '{"event_type": "Trigger Workflow", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+      - uses: actions/checkout@v3
