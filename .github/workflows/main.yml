@@ -7,6 +7,8 @@ on:
         description: 'Workflow 2 which will be triggered'
         required: true
         default: 'workflow_02'
+    types:
+      - Trigger Workflow 
 
       workflow2_github_account:
         description: 'GitHub Account Owner'
