@@ -11,12 +11,12 @@ on:
       workflow2_github_account:
         description: 'GitHub Account Owner'
         required: true
-        default: ':userName'
+        default: 'your_username'  # Replace with your GitHub username
 
       workflow2_repo_github:
         description: 'repo-name'
         required: true
-        default: ':repoName'
+        default: 'your_repository'  # Replace with your target repository name
 
 jobs:
   build:
