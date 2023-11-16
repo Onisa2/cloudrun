@@ -1,27 +1,34 @@
-name: Update Image Tag
+name: workflow_01
 
 on:
-  repository_dispatch:
-    types: [update-image-tags]
+  workflow_dispatch:
+    inputs:
+      workflow_02:
+        description: 'Workflow 2 which will be triggered'
+        required: true
+        default: 'workflow_02'
+
+      workflow2_github_account:
+        description: 'GitHub Account Owner'
+        required: true
+        default: 'your_username'  # Replace with your GitHub username
+
+      workflow2_repo_github:
+        description: 'repo-name'
+        required: true
+        default: 'your_repository'  # Replace with your target repository name
 
 jobs:
-  update_image_tags:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-      with:
-        ref: ${{ github.event.client_payload.sha }}
-
-    - name: Update Image Tag
-      run: |
-        # Implement your logic to update the image tag in your staging environment
-        # This could involve modifying configuration files or scripts
-
-    - name: Commit and Push Changes
-      run: |
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-        git add .
-        git commit -m "Update image tag"
-        git push origin main
+      - name: Trigger Workflow 2
+        run: |
+          curl -X POST \
+            -H "Accept: application/vnd.github.everest-preview+json" \
+            -u ${{ secrets.TOKEN }} \
+            -d '{"event_type": "Trigger Workflow", "client_payload": { "repository": "'"$workflow2_github_account/$workflow2_repo_github"'" }}' \
+            "https://api.github.com/repos/$workflow2_github_account/$workflow2_repo_github/dispatches"
+      - name: Checkout Repository
+        uses: actions/checkout@v3
