@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - new
+
 jobs:
   mirror_to_main:
     runs-on: ubuntu-latest
@@ -26,9 +27,12 @@ jobs:
           # Fetch the latest changes from the target repository
           git fetch target-repo main
 
+          # Fetch the latest changes from the source branch
+          git fetch origin new
+
           # Merge the changes from the source branch to the main branch of the target repository
-          git checkout -b main
-          git merge origin/source-branch
+          git checkout -b main target-repo/main
+          git merge origin/new
 
           # Push the changes to the main branch of the target repository
           git push target-repo main
