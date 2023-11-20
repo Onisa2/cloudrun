@@ -3,7 +3,7 @@ name: Mirror to Main
 on:
   push:
     branches:
-      - practice
+      - new
 jobs:
   mirror_to_main:
     runs-on: ubuntu-latest
