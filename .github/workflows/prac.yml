@@ -36,8 +36,11 @@ jobs:
             git checkout -b main target-repo/main
             git merge -s recursive -X theirs --allow-unrelated-histories origin/new
 
+            # Configure GitHub token for authentication
+            git remote set-url origin "https://${{ secrets.TOKEN }}@github.com/Onisa2/practice.git"
+
             # Push the changes to the main branch of the target repository
-            git push target-repo main
+            git push origin main
           else
             echo "Error: The main branch does not exist in the target repository."
             exit 1
