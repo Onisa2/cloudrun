@@ -37,7 +37,7 @@ jobs:
             git merge -s recursive -X theirs --allow-unrelated-histories origin/new
 
             # Configure GitHub token for authentication
-            git remote set-url origin "https://${{ secrets.TOKEN }}@github.com/Onisa2/practice.git"
+            git remote set-url origin "https://${{ secrets.GITHUB_TOKEN }}@github.com/Onisa2/practice.git"
 
             # Push the changes to the main branch of the target repository
             git push origin main
