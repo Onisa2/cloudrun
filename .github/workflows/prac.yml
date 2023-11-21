@@ -20,21 +20,14 @@ jobs:
           # Configure Git for the target repository
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-
           # Add the target repository as a remote
           git remote add target-repo https://github.com/Onisa2/practice.git  # Replace with the target repository URL
-
           # Fetch the latest changes from the target repository
           git fetch target-repo main
-
           # Fetch the latest changes from the source branch
           git fetch origin new
-
           # Merge the changes from the source branch to the main branch of the target repository
           git checkout -b main target-repo/main
-          git merge -s ours origin/new  # Use -s ours to automatically resolve conflicts by keeping the target branch changes
-
+          git merge --allow-unrelated-histories origin/new
           # Push the changes to the main branch of the target repository
           git push target-repo main
-        env:
-          PAT: ${{ secrets.token }}
