@@ -32,9 +32,9 @@ jobs:
 
           # Merge the changes from the source branch to the main branch of the target repository
           git checkout -b main target-repo/main
-          git merge --allow-unrelated-histories origin/new  # Add the --allow-unrelated-histories flag
+          git merge -s ours origin/new  # Use -s ours to automatically resolve conflicts by keeping the target branch changes
 
           # Push the changes to the main branch of the target repository
           git push target-repo main
         env:
-          PAT: ${{ secrets.TOKEN }}
+          PAT: ${{ secrets.token }}
