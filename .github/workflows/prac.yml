@@ -32,9 +32,9 @@ jobs:
           
           # Merge the changes from the source branch to the main branch of the target repository
           git checkout -b main target-repo/main
-          git merge -s ours origin/new  # Automatically resolve conflicts by keeping the target branch changes
+          git merge -X theirs origin/new  # Automatically resolve conflicts by keeping the source branch changes
           
           # Push the changes to the main branch of the target repository
           git push target-repo main
         env:
-          PAT: ${{ secrets.Token }}
+          PAT: ${{ secrets.token }}
