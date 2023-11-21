@@ -32,7 +32,7 @@ jobs:
 
           # Merge the changes from the source branch to the main branch of the target repository
           git checkout -b main target-repo/main
-          git merge -s recursive -X ours origin/new  # -X ours accepts changes from the source branch
+          git merge --allow-unrelated-histories origin/new  # Add the --allow-unrelated-histories flag
 
           # Push the changes to the main branch of the target repository
           git push target-repo main
