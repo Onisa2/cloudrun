@@ -27,13 +27,18 @@ jobs:
           # Fetch the latest changes from the target repository
           git fetch target-repo main
 
-          # Fetch the latest changes from the source branch
-          git fetch origin new
+          # Verify that the main branch exists in the target repository
+          if git rev-parse --verify target-repo/main; then
+            # Fetch the latest changes from the source branch
+            git fetch origin new
 
-          # Merge the changes from the source branch to the main branch of the target repository
-          git checkout -b main target-repo/main
-          git merge --allow-unrelated-histories origin/new
+            # Merge the changes from the source branch to the main branch of the target repository
+            git checkout -b main target-repo/main
+            git merge -s recursive -X theirs --allow-unrelated-histories origin/new
 
-          # Push the changes to the main branch of the target repository
-          git push target-repo main
-
+            # Push the changes to the main branch of the target repository
+            git push target-repo main
+          else
+            echo "Error: The main branch does not exist in the target repository."
+            exit 1
+          fi
