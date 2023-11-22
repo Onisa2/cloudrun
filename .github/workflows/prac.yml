@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout Source Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.before }}
 
@@ -36,3 +36,5 @@ jobs:
           
           # Push the changes to the main branch of the target repository
           git push target-repo main
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
