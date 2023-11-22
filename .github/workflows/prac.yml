@@ -12,8 +12,9 @@ jobs:
     steps:
       - name: Checkout Source Repository
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.before }}
+        with: 
+          ref: ${{ github.event.before }} 
+          token: ${{ secrets.TOKEN }}
 
       - name: Mirror to Main Repository
         run: |
