@@ -4,15 +4,14 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
   update_image_tags:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.before }}..${{ github.sha }}
 
     - name: Update Image Tag
       run: |
