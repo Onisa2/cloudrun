@@ -1,24 +1,30 @@
-name: Sync to Another Repo
+name: CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  sync:
+  build:
     runs-on: ubuntu-latest
-
+    container: pandoc/latex    # "ubuntu" is a more generic container
+                               # using "pandoc/latex" because of dependencies
+                               # used in the specific "build.sh"
     steps:
-    - name: Checkout Source Repo
-      uses: actions/checkout@v2
-
-    - name: Configure Git
-      run: |
-        git config user.name "${{ github.actor }}"
-        git config user.email "${{ github.actor }}@users.noreply.github.com"
-
-    - name: Push to Another Repo
-      run: |
-        git remote add target_repo https://github.com/Onisa2/cronjob.git
-        git push target_repo main -u ${{ secrets.PAT_TOKEN }}
+      - uses: actions/checkout@v2
+      - name: creates output
+        run:  sh ./build.sh # some command from your repository that creates
+                            # output to "source-directory" ("output" in the example)
+      - name: Pushes to another repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          
+          API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
+        with:
+          source-directory: 'cloudrun'
+          destination-github-username: 'onisa2'
+          destination-repository-name: 'cronjob'
+          user-email: Phanthrr.lily@gmail.com
+          target-branch: main
