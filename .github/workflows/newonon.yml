@@ -8,24 +8,25 @@ on:
 jobs:
   commit_and_push:
     runs-on: ubuntu-latest
-    
+
     steps:
+    - name: Check for Changes
+      run: |
+        BEFORE_COMMIT=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/compare/${{ github.event.before }}...${{ github.sha }}" \
+            | jq -r .status)
+
+        if [ "$BEFORE_COMMIT" == "identical" ]; then
+          echo "No changes to commit. Exiting..."
+          exit 0
+        else
+          echo "Changes detected. Proceeding with commit and push."
+        fi
+
     - name: Checkout Repository
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    
-    - name: Check for Changes
-      run: |
-        BEFORE_COMMIT=$(git rev-parse ${{ github.event.before }})
-        CURRENT_COMMIT=$(git rev-parse HEAD)
-
-        if [ "$BEFORE_COMMIT" != "$CURRENT_COMMIT" ]; then
-          echo "Changes detected. Proceeding with commit and push."
-        else
-          echo "No changes to commit. Exiting..."
-          exit 0
-        fi
 
     - name: Commit and Push Changes
       run: |
