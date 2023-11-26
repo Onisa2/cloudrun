@@ -21,8 +21,8 @@ jobs:
 
     - name: Check for Changes
       run: |
-        git diff --exit-code || exit 0
-    
+        git diff --exit-code || { echo "No changes to commit. Exiting..."; exit 0; }
+
     - name: Commit and Push Changes
       run: |
         git config user.name "GitHub Actions"
