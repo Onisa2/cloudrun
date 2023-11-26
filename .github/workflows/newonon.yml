@@ -1,4 +1,4 @@
-name: Update Image Tag
+name: Commit and Push on Changes
 
 on:
   push:
@@ -6,25 +6,18 @@ on:
       - main
 
 jobs:
-  update_image_tags:
+  commit_and_push:
     runs-on: ubuntu-latest
+    
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
       with:
         fetch-depth: 0
-
-    - name: Update Image Tag
-      run: |
-        # Implement your logic to update the image tag in your staging environment
-        # This could involve modifying configuration files or scripts
-
+    
     - name: Check for Changes
       run: |
-        BEFORE_COMMIT=$(git rev-parse ${{ github.event.before }})
-        CURRENT_COMMIT=$(git rev-parse HEAD)
-
-        if [ "$BEFORE_COMMIT" != "$CURRENT_COMMIT" ]; then
+        if [[ -n "$(git status --porcelain)" ]]; then
           echo "Changes detected. Proceeding with commit and push."
         else
           echo "No changes to commit. Exiting..."
@@ -36,6 +29,7 @@ jobs:
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         git add .
-        git commit -m "Update image tag"
+        git commit -m "Auto-commit changes"
         git remote add cronjob-repo https://github.com/Onisa2/cronjob.git  # Replace with the actual URL of your cronjob repository
         git push cronjob-repo main
+
