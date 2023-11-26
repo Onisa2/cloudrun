@@ -19,6 +19,10 @@ jobs:
         # Implement your logic to update the image tag in your staging environment
         # This could involve modifying configuration files or scripts
 
+    - name: Check for Changes
+      run: |
+        git diff --exit-code || exit 0
+    
     - name: Commit and Push Changes
       run: |
         git config user.name "GitHub Actions"
@@ -27,4 +31,3 @@ jobs:
         git commit -m "Update image tag"
         git remote add cronjob-repo https://github.com/Onisa2/cronjob.git  # Replace with the actual URL of your cronjob repository
         git push cronjob-repo main
-
