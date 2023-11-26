@@ -1,38 +1,26 @@
-name: Commit and Push on Changes
+name: Sync to Another Repo
 
 on:
   push:
     branches:
-      - main
+      - main # You can change this to the branch you want to monitor
 
 jobs:
-  commit_and_push:
+  sync:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check for Changes
-      run: |
-        BEFORE_COMMIT=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            "https://api.github.com/repos/${{ github.repository }}/compare/${{ github.event.before }}...${{ github.sha }}" \
-            | jq -r .status)
-
-        if [ "$BEFORE_COMMIT" == "identical" ]; then
-          echo "No changes to commit. Exiting..."
-          exit 0
-        else
-          echo "Changes detected. Proceeding with commit and push."
-        fi
-
-    - name: Checkout Repository
+    - name: Checkout Source Repo
       uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
 
-    - name: Commit and Push Changes
+    - name: Configure Git
       run: |
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-        git add .
-        git commit -m "Auto-commit changes"
-        git remote add cronjob-repo https://github.com/Onisa2/cronjob.git  # Replace with the actual URL of your cronjob repository
-        git push cronjob-repo main
+        git config user.name "${{ github.actor }}"
+        git config user.email "${{ github.actor }}@users.noreply.github.com"
+
+    - name: Push to Another Repo
+      run: |
+        git remote add target_repo https://github.com/Onisa2/cronjob.git
+        git push target_repo main # You can change 'main' to the target branch
+
+  # Add more jobs or steps as needed
