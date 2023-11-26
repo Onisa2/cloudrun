@@ -29,5 +29,5 @@ jobs:
         git config user.email "actions@github.com"
         git add .
         git commit -m "Update image tag"
-        git remote add cronjob-repo https://github.com/Onisa2/cronjob.git  # Replace with the actual URL of your cronjob repository
-        git push cronjob-repo main
+        git remote add cronjob-repo https://github.com/Onisa2/moh.git  # Replace with the actual URL of your cronjob repository
+        git push moh-repo main
