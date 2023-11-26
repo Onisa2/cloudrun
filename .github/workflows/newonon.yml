@@ -17,7 +17,10 @@ jobs:
     
     - name: Check for Changes
       run: |
-        if [[ -n "$(git status --porcelain)" ]]; then
+        BEFORE_COMMIT=$(git rev-parse ${{ github.event.before }})
+        CURRENT_COMMIT=$(git rev-parse HEAD)
+
+        if [ "$BEFORE_COMMIT" != "$CURRENT_COMMIT" ]; then
           echo "Changes detected. Proceeding with commit and push."
         else
           echo "No changes to commit. Exiting..."
@@ -32,4 +35,3 @@ jobs:
         git commit -m "Auto-commit changes"
         git remote add cronjob-repo https://github.com/Onisa2/cronjob.git  # Replace with the actual URL of your cronjob repository
         git push cronjob-repo main
-
