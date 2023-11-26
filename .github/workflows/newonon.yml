@@ -3,7 +3,7 @@ name: Sync to Another Repo
 on:
   push:
     branches:
-      - main # You can change this to the branch you want to monitor
+      - main
 
 jobs:
   sync:
@@ -21,7 +21,4 @@ jobs:
     - name: Push to Another Repo
       run: |
         git remote add target_repo https://github.com/Onisa2/cronjob.git
-        git push target_repo 'main' -u ${{ secrets.TOKEN }}
-
-
-  # Add more jobs or steps as needed
+        git push target_repo main -u ${{ secrets.PAT_TOKEN }}
