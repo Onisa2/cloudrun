@@ -21,6 +21,7 @@ jobs:
     - name: Push to Another Repo
       run: |
         git remote add target_repo https://github.com/Onisa2/cronjob.git
-        git push target_repo main # You can change 'main' to the target branch
+        git push target_repo main -u ${{ secrets.TOKEN }}
+
 
   # Add more jobs or steps as needed
