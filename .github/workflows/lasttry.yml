@@ -1,4 +1,4 @@
-name: Publish to Moh
+name: Publish to Mohh
 
 on:
   push:
@@ -32,7 +32,7 @@ jobs:
         with:
           source-directory: output/
           destination-github-username: 'onisa2'
-          destination-repository-name: 'moh'
+          destination-repository-name: 'mohh'
           user-email: 'phanthrr.lily@gmail.com'
           commit-message: 'pushed from $GITHUB_REF'
           target-branch: 'main'
