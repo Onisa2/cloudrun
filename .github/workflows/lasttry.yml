@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Check if output directory exists
+        run: test -d output || mkdir output
       - name: Copy all files to output folder
-        run: |
-          mkdir output
-          cp -r * output
+        run: cp -r * output
 
       - name: Push to public repository
         id: push_directory
