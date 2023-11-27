@@ -15,6 +15,11 @@ jobs:
       - name: Copy all files to output folder
         run: rsync -a --exclude=output/ . output/
 
+      - name: Fetch and merge changes from remote
+        run: |
+          git fetch origin
+          git merge origin/main
+
       - name: Push to public repository
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@ssh-deploy-key
@@ -24,6 +29,8 @@ jobs:
           source-directory: output/
           destination-github-username: 'onisa2'
           destination-repository-name: 'moh'
-          user-email: phanthrr.lily@gmail,com
-          commit-message: pushed from $GITHUB_REF
-          target-branch: main
+          user-email: 'phanthrr.lily@gmail.com'
+          commit-message: 'pushed from $GITHUB_REF'
+          target-branch: 'main'
+          github-server: 'github.com'
+
