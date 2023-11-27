@@ -28,7 +28,13 @@ jobs:
           commit-message: 'pushed from $GITHUB_REF'
           target-branch: 'main'
 
-      # Add a step to force push changes
+      # Add steps to pull changes and force push
+      - name: Pull changes from the destination repository
+        run: |
+          git remote add destination_repo git@github.com:onisa2/mohh.git
+          git fetch destination_repo
+          git pull destination_repo main
+
       - name: Force push changes to the destination repository
         run: |
           cd ${{ github.workspace }}
