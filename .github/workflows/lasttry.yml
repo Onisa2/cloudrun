@@ -21,6 +21,9 @@ jobs:
       - name: Merge changes from remote
         run: git merge origin/main
 
+      - name: Pull changes from remote
+        run: git pull origin main
+
       - name: Push to public repository
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@ssh-deploy-key
