@@ -29,10 +29,10 @@ jobs:
       - name: Push to another repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.TOKEN }}
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
         with:
           source-directory: 'cloudrun'
           destination-github-username: 'onisa2'
-          destination-repository-name: 'cronjob'
+          destination-repository-name: 'mohh'
           user-email: Phanthrr.lily@gmail.com
           target-branch: main
