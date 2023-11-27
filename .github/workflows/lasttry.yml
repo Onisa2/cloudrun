@@ -27,5 +27,11 @@ jobs:
           user-email: 'phanthrr.lily@gmail.com'
           commit-message: 'pushed from $GITHUB_REF'
           target-branch: 'main'
-          github-server: 'github.com'
-          extra-args: '--force'
+
+      # Add a step to force push changes
+      - name: Force push changes to the destination repository
+        run: |
+          cd ${{ github.workspace }}
+          git config user.email "phanthrr.lily@gmail.com"
+          git config user.name "onisa2"
+          git push origin main --force
