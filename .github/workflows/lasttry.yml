@@ -1,4 +1,4 @@
-name: Publish to Mohh
+name: Your moh
 
 on:
   push:
@@ -6,25 +6,16 @@ on:
       - main
 
 jobs:
-  post:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Check if output directory exists
-        run: test -d output || mkdir output
-      - name: Copy all files to output folder
-        run: rsync -a --exclude=output/ . output/
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Fetch changes from remote
-        run: git fetch origin
+      # ... other steps if needed ...
 
-      - name: Merge changes from remote
-        run: git merge origin/main
-
-      - name: Pull changes from remote
-        run: git pull origin main
-
-      - name: Push to public repository
+      - name: Run the action to push changes
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@ssh-deploy-key
         env:
@@ -37,3 +28,4 @@ jobs:
           commit-message: 'pushed from $GITHUB_REF'
           target-branch: 'main'
           github-server: 'github.com'
+          extra-args: '--force'
