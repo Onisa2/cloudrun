@@ -1,0 +1,29 @@
+name: Publish to Moh
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Copy all files to output folder
+        run: |
+          mkdir output
+          cp -r * output
+
+      - name: Push to public repository
+        id: push_directory
+        uses: cpina/github-action-push-to-another-repository@ssh-deploy-key
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+        with:
+          source-directory: output/
+          destination-github-username: 'onisa2'
+          destination-repository-name: 'moh'
+          user-email: phanthrr.lily@gmail.com
+          commit-message: pushed from $GITHUB_REF
+          target-branch: main
