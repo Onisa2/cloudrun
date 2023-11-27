@@ -1,4 +1,4 @@
-name: Your moh
+name: Push to moh
 
 on:
   push:
@@ -6,26 +6,21 @@ on:
       - main
 
 jobs:
-  build:
+  push_to_another_repo:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      # ... other steps if needed ...
-
-      - name: Run the action to push changes
-        id: push_directory
-        uses: cpina/github-action-push-to-another-repository@ssh-deploy-key
-        env:
-          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
-        with:
-          source-directory: ./
-          destination-github-username: 'onisa2'
-          destination-repository-name: 'mohh'
-          user-email: 'phanthrr.lily@gmail.com'
-          commit-message: 'pushed from $GITHUB_REF'
-          target-branch: 'main'
-          github-server: 'github.com'
-          extra-args: '--force'
+    - name: Push to Another Repository
+      uses: cpina/github-action-push-to-another-repository@ssh-deploy-key
+      with:
+        SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+        SOURCE-DIRECTORY: ./  # Set this to the root of your repository
+        DESTINATION-GITHUB-USERNAME: onisa2
+        DESTINATION-REPOSITORY-NAME: mohh
+        USER-EMAIL: phanthrr.lily@gmail.com
+        COMMIT-MESSAGE: 'Pushed from $GITHUB_REF'
+        TARGET-BRANCH: main
+        EXTRA-ARGS: '--force'  # Add force-push option
